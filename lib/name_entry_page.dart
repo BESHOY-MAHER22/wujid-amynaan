@@ -250,45 +250,6 @@ class _NameEntryCardState extends State<NameEntryCard> {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   late final ConfettiController _confettiController;
-  final List<String> _femaleNames = [
-    'ماريا',
-    'مريم',
-    'سارة',
-    'فاطمة',
-    'مروة',
-    'إيمان',
-    'آية',
-    'داليا',
-    'رنا',
-    'ياسمين',
-    'هبة',
-    'رغدة',
-    'هدى',
-    'منال',
-    'دينا',
-    'أماني',
-    'أمل',
-    'ملاك',
-    'سلمى',
-    'مها',
-    'حلا',
-    'فادية',
-    'لينا',
-    'سالي',
-    'آلاء',
-    'ليلى',
-    'نورا',
-    'ميرا',
-    'هند',
-    'شهد',
-    'يمنى',
-    'غادة',
-    'منى',
-    'رانية',
-    'سميرة',
-    'مها',
-    'أنا',
-  ];
 
   bool _isPressed = false;
   bool _hasFocus = false;
@@ -309,25 +270,7 @@ class _NameEntryCardState extends State<NameEntryCard> {
   String _smartTitlePrefix(String name) {
     final trimmed = name.trim();
     if (trimmed.isEmpty) return 'أ./';
-    return _isFemaleName(trimmed) ? 'م./' : 'أ./';
-  }
-
-  bool _isFemaleName(String name) {
-    final normalized = name.trim();
-    if (normalized.isEmpty) return false;
-
-    final lastChar = normalized.characters.last;
-    if (lastChar == 'ة') return true;
-
-    final simpleName = normalized
-        .replaceAll(RegExp(r'\s+'), '')
-        .replaceAll('-', '')
-        .toLowerCase();
-
-    return _femaleNames.any(
-      (femaleName) =>
-          femaleName.replaceAll(RegExp(r'\s+'), '').toLowerCase() == simpleName,
-    );
+    return isFemaleName(trimmed) ? 'م./' : 'أ./';
   }
 
   void _showEmptyNameSnackBar(BuildContext context) {
@@ -391,7 +334,7 @@ class _NameEntryCardState extends State<NameEntryCard> {
       _confettiController.play();
     }
 
-    final gender = _isFemaleName(rawName) ? 'أنثى' : 'ذكر';
+    final gender = isFemaleName(rawName) ? 'أنثى' : 'ذكر';
     widget.onSubmit(rawName, gender);
   }
 

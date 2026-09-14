@@ -73,9 +73,12 @@ class _WelcomePageState extends State<WelcomePage>
 
   String get _titlePrefix => widget.gender == 'أنثى' ? 'م.' : 'أ.';
 
-  String get _greetingText => isBishopAthanasius(widget.name)
-      ? 'هنستناك يا سيدنا'
-      : 'هنستناك يا $_titlePrefix ${widget.name}';
+  String get _greetingText {
+    if (isBishopAthanasius(widget.name)) return 'هنستناك يا سيدنا';
+    return widget.gender == 'أنثى'
+        ? 'هنستناكي يا $_titlePrefix ${widget.name}'
+        : 'هنستناك يا $_titlePrefix ${widget.name}';
+  }
 
   String get _whatsappMessage =>
       'أهلاً بك، أؤكد حضوري لحفل (وُجِدَ أَمِينًا) - الاسم: $_titlePrefix ${widget.name}';
